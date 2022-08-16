@@ -18,7 +18,7 @@ def handle_start():
 
 @socketio.on('log')
 def handle_log(data):
-    print('Log: ' + data) 
+    print('Log: ' + str(data)) 
 
 if __name__ == '__main__':
     socketio.run(app)
