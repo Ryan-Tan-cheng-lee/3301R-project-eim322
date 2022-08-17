@@ -1,4 +1,4 @@
-#Reading name constants
+#Reading class variables
 
 
 #Environment variable name constants
