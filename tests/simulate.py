@@ -22,7 +22,7 @@ def simulate(duration, **kwargs):
         sio.connect(f'{address}:{port}/')
     except socketio.exceptions.ConnectionError:
         print("Unable to connect to socket.")
-        exit()
+        return()
 
     start = time.time()
     print(kwargs.keys())
@@ -33,8 +33,14 @@ def simulate(duration, **kwargs):
         reading = reading | {attr: random() * 90 for attr in reading_attr}
         print(reading)
         reading = Reading(**reading)
-        sio.emit(constants.DEFAULT_READING_EMIT_EVENT, reading.to_json())
+
+        try:
+            sio.emit(constants.DEFAULT_READING_EMIT_EVENT, reading.to_json())
+        except:
+            return()
+
         time.sleep(1/freq)
+        
     sio.disconnect()
 
 def create_threads(num_of_sensors, duration):

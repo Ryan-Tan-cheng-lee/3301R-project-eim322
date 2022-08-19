@@ -1,6 +1,6 @@
 #Reading class variables
 READING_ATTR_ENV_VAR='READING_ATTR'
-ATTR_VAR='attributes'
+READING_ATTR_VAR_NAME='attributes'
 
 #Environment variable name constants
 ADDRESS_ENV_VAR='ADDRESS'
