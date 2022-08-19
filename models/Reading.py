@@ -1,6 +1,9 @@
+import json
+
 class Reading:
     def __init__(self, **kwargs):
-        # for k in kwargs.keys():
-        # if k in [acceptable_keys_list]:
-        #   self.__setattr__(k, kwargs[k])
-        pass
+        for k in kwargs.keys():
+            self.__setattr__(k, kwargs[k])
+    
+    def to_json(self):
+        return json.dumps(self.__dict__)

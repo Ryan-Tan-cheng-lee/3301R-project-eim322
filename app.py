@@ -1,6 +1,8 @@
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 
+import constants
+
 app = Flask(__name__)
 socketio = SocketIO(app)
 
@@ -16,9 +18,9 @@ def handle_disconnect():
 def handle_start():
     print('Start')
 
-@socketio.on('log')
+@socketio.on(constants.DEFAULT_READING_EMIT_EVENT)
 def handle_log(data):
-    print('Log: ' + str(data)) 
+    print(f'{constants.DEFAULT_READING_EMIT_EVENT}: ' + str(data)) 
 
 if __name__ == '__main__':
     socketio.run(app)
