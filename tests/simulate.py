@@ -40,7 +40,7 @@ def simulate(duration, **kwargs):
             return()
 
         time.sleep(1/freq)
-        
+
     sio.disconnect()
 
 def create_threads(num_of_sensors, duration):
@@ -55,7 +55,7 @@ if __name__ == '__main__':
     address = os.getenv(constants.ADDRESS_ENV_VAR, constants.DEFAULT_ADDRESS)
     port = os.getenv(constants.PORT_ENV_VAR, constants.DEFAULT_PORT)
     num_of_sensors = int(os.getenv(constants.NUM_OF_SENSORS_ENV_VAR, constants.DEFAULT_NUM_OF_SENSORS))
-    reading_attr = json.loads(os.getenv(constants.READING_ATTR_ENV_VAR, constants.DEFAULT_ATTR))[constants.ATTR_VAR]
+    reading_attr = json.loads(os.getenv(constants.READING_ATTR_ENV_VAR, constants.DEFAULT_ATTR))[constants.READING_ATTR_VAR_NAME]
     freq = float(os.getenv(constants.FREQ_ENV_VAR, constants.DEFAULT_FREQ))
     duration = float(os.getenv('SIM_DURATION', 20))
     print(f'Address: {address}')
