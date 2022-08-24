@@ -92,6 +92,7 @@ if __name__ == '__main__':
 
     if mode == "MASTER":
         simulate()
+        exit()
     elif mode == "INDIVIDUAL":
         threads = create_threads()
     else:
