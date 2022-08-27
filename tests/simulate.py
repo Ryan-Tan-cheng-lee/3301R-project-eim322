@@ -40,7 +40,7 @@ def simulate(**kwargs):
         if mode == 'INDIVIDUAL':
             reading = {id_name: id}
             reading = reading | {attr: random() * 90 for attr in reading_attr}
-            print(reading)
+            # print(reading)
             reading = Reading(**reading)
             
             try:
@@ -50,7 +50,7 @@ def simulate(**kwargs):
 
         elif mode == 'MASTER':
             reading = {f'sensor{i}': random() * 90 for i in range(num_of_sensors)}
-            print(reading)
+            # print(reading)
             try:
                 sio.emit(constants.DEFAULT_READING_EMIT_EVENT, json.dumps(reading))
             except:
