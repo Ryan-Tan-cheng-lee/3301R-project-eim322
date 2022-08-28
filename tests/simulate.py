@@ -19,7 +19,7 @@ def simulate(**kwargs):
     sio = socketio.Client()
 
     try:
-        sio.connect(f'{address}:{port}/')
+        sio.connect(f'{address}:{port}', namespaces=['/'])
     except socketio.exceptions.ConnectionError:
         print("Unable to connect to socket.")
         return()
@@ -45,7 +45,9 @@ def simulate(**kwargs):
             
             try:
                 sio.emit(constants.DEFAULT_READING_EMIT_EVENT, reading.to_json())
-            except:
+            except Exception as e:
+                print(e)
+                sio.disconnect()
                 return()
 
         elif mode == 'MASTER':
@@ -53,7 +55,9 @@ def simulate(**kwargs):
             # print(reading)
             try:
                 sio.emit(constants.DEFAULT_READING_EMIT_EVENT, json.dumps(reading))
-            except:
+            except Exception as e:
+                print(e)
+                sio.disconnect()
                 return()
         else:
             sio.disconnect()

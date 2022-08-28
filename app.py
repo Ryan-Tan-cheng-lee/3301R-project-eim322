@@ -23,9 +23,9 @@ def handle_start():
 def handle_log(data):
     print(f'{constants.DEFAULT_READING_EMIT_EVENT}: ' + str(data))
 
-@app.route("/helloworld", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def home_page():
-    return json.dumps("Hello world!") 
+    return json.dumps("Welcome!") 
 
 if __name__ == '__main__':
     socketio.run(app, host='0.0.0.0', port=5000, debug=True, log_output=True)
