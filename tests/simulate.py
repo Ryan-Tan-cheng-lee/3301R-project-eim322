@@ -1,6 +1,5 @@
 import sys
 import os
-from venv import create
 sys.path.append(os.getcwd())
 
 from random import random

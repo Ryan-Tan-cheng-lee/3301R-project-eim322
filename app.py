@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from flask_socketio import SocketIO
+from flask_socketio import SocketIO, emit
 
 import json
 import constants
@@ -22,10 +22,11 @@ def handle_start():
 @socketio.on(constants.DEFAULT_READING_EMIT_EVENT)
 def handle_log(data):
     print(f'{constants.DEFAULT_READING_EMIT_EVENT}: ' + str(data))
+    emit("log", dict(json.loads(data)), broadcast=True)
 
 @app.route("/", methods=['GET', 'POST'])
 def home_page():
     return json.dumps("Welcome!") 
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=5000, debug=True, log_output=True)
+    socketio.run(app, host='0.0.0.0', port=80, debug=True, log_output=True)
