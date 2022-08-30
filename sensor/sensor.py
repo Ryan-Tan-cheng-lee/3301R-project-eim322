@@ -8,8 +8,10 @@ except Exception as e:
 
 @socketService.emit()
 def getReading() -> object:
+    #TODO: Functionality
+    
+    # Important!!! Return a json serializable object
     pass
-    # Return a json serializable object
 
 if __name__ == "__main__":
     pass
