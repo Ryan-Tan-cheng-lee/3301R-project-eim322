@@ -16,4 +16,4 @@ Install required packages using `pip install -r requirements.txt`
 
 - Flask development server is not intended to be used in a production deployment. Therefore, intention is to use gunicorn as the WSGI server.
 - Database storage of readings in a NoSQL database (eg. MongoDB)
-- Explore containerization with Docker before hosting on a hyperscaler(eg. Google Cloud Run)
+- Explore containerization with Docker before hosting on Google Cloud Run
