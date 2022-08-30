@@ -4,24 +4,35 @@ sys.path.append(os.getcwd())
 
 from random import random
 import socketio
-import bluetooth
 import constants
 import time
 import json
 from threading import Thread
 from models import Reading
+from services import SocketService
 
 reading_attr = []
 freq = 1
 
-def simulate(**kwargs):
-    sio = socketio.Client()
+try:
+    socketService = SocketService()
+except Exception as e:
+    print(e)
+    exit()
 
-    try:
-        sio.connect(f'{address}:{port}', namespaces=['/'])
-    except socketio.exceptions.ConnectionError:
-        print("Unable to connect to socket.")
-        return()
+
+@socketService.emit()
+def getReading(message):
+    return message
+
+def simulate(**kwargs):
+    # sio = socketio.Client()
+
+    # try:
+    #     sio.connect(f'{address}:{port}', namespaces=['/'])
+    # except socketio.exceptions.ConnectionError:
+    #     print("Unable to connect to socket.")
+    #     return()
 
     reading_attr = json.loads(os.getenv(constants.READING_ATTR_ENV_VAR, constants.DEFAULT_ATTR))[constants.READING_ATTR_VAR_NAME]
     start = time.time()
@@ -43,28 +54,31 @@ def simulate(**kwargs):
             reading = Reading(**reading)
             
             try:
-                sio.emit(constants.DEFAULT_READING_EMIT_EVENT, reading.to_json())
+                # sio.emit(constants.DEFAULT_READING_EMIT_EVENT, reading.to_json())
+                getReading(reading)
             except Exception as e:
                 print(e)
-                sio.disconnect()
+                # sio.disconnect()
                 return()
 
         elif mode == 'MASTER':
             reading = {f'sensor{i}': random() * 90 for i in range(num_of_sensors)}
             # print(reading)
             try:
-                sio.emit(constants.DEFAULT_READING_EMIT_EVENT, json.dumps(reading))
+                # sio.emit(constants.DEFAULT_READING_EMIT_EVENT, json.dumps(reading))
+                getReading(reading)
             except Exception as e:
                 print(e)
-                sio.disconnect()
+                # sio.disconnect()
                 return()
         else:
-            sio.disconnect()
+            # sio.disconnect()
             raise Exception('Mode is either INDIVIDUAL or MASTER')
            
         time.sleep(1/freq)
 
-    sio.disconnect()
+    # sio.disconnect()
+    socketService.disconnect()
 
 def create_threads():
     threads = []
@@ -101,11 +115,11 @@ if __name__ == '__main__':
     else:
         raise Exception('Mode is either INDIVIDUAL or MASTER')
 
-    if threads:
-        for thread in threads:
-            thread.start()
-        for thread in threads:
-            thread.join()
+    # if threads:
+    #     for thread in threads:
+    #         thread.start()
+    #     for thread in threads:
+    #         thread.join()
 
 
 
